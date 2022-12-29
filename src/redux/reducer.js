@@ -8,6 +8,7 @@ const initialState = {
   desciption: null,
   sunrise: null,
   sunset: null,
+  date: null,
   icon: null,
   wind: {
     deg: null,
@@ -19,16 +20,17 @@ const initialState = {
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case types.SET_DATA: {
-      //   console.log({ payload });
+      console.log({ payload });
       return {
         ...state,
-        temp: payload.main.temp,
+        temp: Math.round(payload.main.temp),
         humidity: payload.main.humidity,
         pressure: payload.main.pressure,
         sunrise: payload.sys.sunrise,
         sunset: payload.sys.sunset,
         visibility: payload.visibility,
         description: payload.weather[0].description,
+        date: payload.dt,
         icon: payload.weather[0].icon,
         wind: { ...state.wind, ...payload.wind },
       };

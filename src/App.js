@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { set_citY, set_data } from "./redux/action";
+import { set_city, set_data } from "./redux/action";
 import cities from "./city_list.json";
+import Panel from "./CustomComponents/Panel";
+import Temperature from "./Components/Temperature/Temperature";
 
 function App() {
   const [lat, setLat] = useState(0);
@@ -24,7 +26,9 @@ function App() {
       setLon(longitude);
 
       // console.log({ location });
-      dispatch(set_citY(getCityName(latitude, longitude)));
+      getCityName(latitude, longitude)
+        .then((v) => dispatch(set_city(v)))
+        .catch((e) => console.log.e);
     });
   }, []);
 
@@ -39,20 +43,28 @@ function App() {
   }, [url]);
 
   const getCityName = (lat, lon) => {
-    const city = cities.filter(
-      (c) =>
-        c.coord.lat.toFixed(2) === lat.toFixed(2) &&
-        c.coord.lon.toFixed(2) === lon.toFixed(2)
-    );
-    // console.log({ city });
-    return city[0].name;
+    return new Promise((resolve, reject) => {
+      const city = cities.filter(
+        (c) =>
+          c.coord.lat.toFixed(2) === lat.toFixed(2) &&
+          c.coord.lon.toFixed(2) === lon.toFixed(2)
+      );
+      const city_name = city[0].name;
+      if (typeof city_name === "undefined") reject("City not found");
+
+      resolve(city_name);
+    });
   };
 
   // console.log("lat:" + lat);
   // console.log("lon:" + lon);
   console.log({ data });
 
-  return <div className="App">working </div>;
+  return (
+    <div className="App">
+      <Temperature />
+    </div>
+  );
 }
 
 export default App;

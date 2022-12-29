@@ -1,0 +1,42 @@
+.Temperature {
+  height: 400px;
+}
+
+.TemperatureCityTime {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map_icon {
+  margin-right: 20px;
+}
+
+.temp_info {
+  display: flex;
+}
+
+.temp {
+  position: relative;
+  margin-left: 120px;
+  margin-top: 30px;
+}
+
+.temp :nth-child(1) {
+  font-size: 172px;
+}
+.temp :nth-child(2) {
+  position: absolute;
+  top: 20px;
+  font-size: 100px;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather > span {
+  margin-top: -40px;
+  font-size: 30px;
+}

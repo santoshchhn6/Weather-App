@@ -1,0 +1,27 @@
+.blur {
+  background: rgba(73, 179, 240, 0.466);
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -9;
+}
+
+.c1 {
+  width: 400px;
+  height: 400px;
+  left: 0;
+  top: 0;
+}
+.c2 {
+  background: rgba(255, 96, 22, 0.418);
+  width: 200px;
+  height: 200px;
+  left: 350px;
+  top: 50px;
+}
+.c3 {
+  width: 150px;
+  height: 150px;
+  left: 0;
+  top: 0;
+}

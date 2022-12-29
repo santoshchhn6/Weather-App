@@ -7,6 +7,6 @@ export const set_data = (payload) => {
   return { type: types.SET_DATA, payload };
 };
 
-export const set_citY = (payload) => {
+export const set_city = (payload) => {
   return { type: types.SET_CITY, payload };
 };
