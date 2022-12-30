@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { set_city, set_data } from "./redux/action";
+import { set_city, set_current_data, set_forecast_data } from "./redux/action";
 import cities from "./city_list.json";
-import Panel from "./CustomComponents/Panel";
 import Temperature from "./Components/Temperature/Temperature";
 
 function App() {
@@ -13,10 +12,36 @@ function App() {
   const [url, setUrl] = useState(
     `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
   );
+  const [url2, setUrl2] = useState(
+    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+  );
 
   const dispatch = useDispatch();
 
-  const data = useSelector((state) => state);
+  const state = useSelector((state) => state);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        dispatch(set_current_data(data));
+      })
+      .catch(console.error);
+    fetch(url2)
+      .then((res) => {
+        if (!res.ok) throw new Error(res.statusText);
+        return res.json();
+      })
+      .then((data) => {
+        console.log({ data });
+        // dispatch(set_current_data(data));
+      })
+      .catch(console.error);
+  }, [url, url2]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (location) {
@@ -31,16 +56,6 @@ function App() {
         .catch((e) => console.log.e);
     });
   }, []);
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => dispatch(set_data(data)))
-      .catch(console.error);
-  }, [url]);
 
   const getCityName = (lat, lon) => {
     return new Promise((resolve, reject) => {
@@ -58,7 +73,7 @@ function App() {
 
   // console.log("lat:" + lat);
   // console.log("lon:" + lon);
-  console.log({ data });
+  // console.log({ state });
 
   return (
     <div className="App">

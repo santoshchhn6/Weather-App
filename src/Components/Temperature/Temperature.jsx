@@ -2,8 +2,10 @@ import Panel from "../../CustomComponents/Panel";
 import "./Temperature.css";
 import { FaMapMarker } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { getDateTimeString } from "../../dateTime";
 const Temperature = () => {
-  const data = useSelector((state) => state);
+  const data = useSelector((state) => state.current);
+  const dateString = getDateTimeString(data.date * 1000);
   return (
     <Panel className="Temperature">
       <div className="TemperatureCityTime">
@@ -11,7 +13,7 @@ const Temperature = () => {
           <FaMapMarker className="map_icon" />
           {data.city}
         </span>
-        <span>{data.date}</span>
+        <span>{dateString}</span>
       </div>
       <div className="temp_info">
         <div className="temp">
