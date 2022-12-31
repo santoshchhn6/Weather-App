@@ -1,5 +1,5 @@
 .Temperature {
-  height: 400px;
+  /* height: 400px; */
 }
 
 .TemperatureCityTime {
@@ -39,4 +39,7 @@
 .weather > span {
   margin-top: -40px;
   font-size: 30px;
+}
+
+.chart {
 }

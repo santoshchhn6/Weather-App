@@ -38,7 +38,7 @@ function App() {
       })
       .then((data) => {
         console.log({ data });
-        // dispatch(set_current_data(data));
+        dispatch(set_forecast_data(data));
       })
       .catch(console.error);
   }, [url, url2]);
@@ -73,7 +73,7 @@ function App() {
 
   // console.log("lat:" + lat);
   // console.log("lon:" + lon);
-  // console.log({ state });
+  console.log({ state });
 
   return (
     <div className="App">

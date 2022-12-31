@@ -17,7 +17,7 @@ const initialState = {
     },
     city: null,
   },
-  forecast: {},
+  forecast: [],
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -41,8 +41,14 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     }
     case types.SET_FORECAST_DATA: {
-      console.log({ payload });
-      return state;
+      return {
+        ...state,
+        forecast: payload.list.map((e) => ({
+          date: e.dt,
+          temp: e.main.temp,
+          icon: e.weather[0].icon,
+        })),
+      };
     }
     case types.SET_CITY: {
       return { ...state, current: { ...state.current, city: payload } };
