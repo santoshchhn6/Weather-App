@@ -37,6 +37,7 @@ const reducer = (state = initialState, { type, payload }) => {
           date: payload.dt,
           icon: payload.weather[0].icon,
           wind: { ...state.wind, ...payload.wind },
+          city: payload.name,
         },
       };
     }
@@ -50,9 +51,7 @@ const reducer = (state = initialState, { type, payload }) => {
         })),
       };
     }
-    case types.SET_CITY: {
-      return { ...state, current: { ...state.current, city: payload } };
-    }
+
     default:
       return state;
   }

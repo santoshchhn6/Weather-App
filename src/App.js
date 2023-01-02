@@ -2,78 +2,73 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import { set_city, set_current_data, set_forecast_data } from "./redux/action";
-import cities from "./city_list.json";
 import Temperature from "./Components/Temperature/Temperature";
 
 function App() {
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
+  const [lat, setLat] = useState(null);
+  const [lon, setLon] = useState(null);
   // const [data, setData] = useState(0);
-  const [url, setUrl] = useState(
-    `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
-  );
-  const [url2, setUrl2] = useState(
-    `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
-  );
+  // const [currentWeatherUrl, setcurrentWeatherUrl] = useState(
+  //   `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+  // );
+  // const [forecastUrl, setforecastUrl] = useState(
+  //   `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
+  // );
+  // const [cityNameUrl, setcityNameUrl] = useState(
+  //   `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${process.env.REACT_APP_API_KEY}`
+  // );
 
   const dispatch = useDispatch();
 
   const state = useSelector((state) => state);
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => {
-        console.log({ data });
-        dispatch(set_current_data(data));
-      })
-      .catch(console.error);
-    fetch(url2)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => {
-        console.log({ data });
-        dispatch(set_forecast_data(data));
-      })
-      .catch(console.error);
-  }, [url, url2]);
+    getLatLon.then((loc) => {
+      const [lt, ln] = loc;
+      setLat(lt);
+      setLon(ln);
+    });
 
-  useEffect(() => {
+    if (lat !== null || lon !== null) {
+      console.log("lt:" + lat);
+      console.log("ln:" + lon);
+
+      let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
+      let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
+
+      fetch(currentWeatherUrl)
+        .then((res) => {
+          if (!res.ok) throw new Error(res.statusText);
+          return res.json();
+        })
+        .then((data) => {
+          console.log("============Current=================");
+          console.log({ data });
+          dispatch(set_current_data(data));
+        })
+        .catch(console.error);
+      fetch(forecastUrl)
+        .then((res) => {
+          if (!res.ok) throw new Error(res.statusText);
+          return res.json();
+        })
+        .then((data) => {
+          console.log("============Forecast=================");
+          console.log({ data });
+          dispatch(set_forecast_data(data));
+        })
+        .catch(console.error);
+    }
+  }, [lat, lon]);
+
+  const getLatLon = new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(function (location) {
       const { latitude, longitude } = location.coords;
-
-      setLat(latitude);
-      setLon(longitude);
-
-      // console.log({ location });
-      getCityName(latitude, longitude)
-        .then((v) => dispatch(set_city(v)))
-        .catch((e) => console.log.e);
+      let lat = latitude.toFixed(2);
+      let lon = longitude.toFixed(2);
+      resolve([lat, lon]);
     });
-  }, []);
-
-  const getCityName = (lat, lon) => {
-    return new Promise((resolve, reject) => {
-      const city = cities.filter(
-        (c) =>
-          c.coord.lat.toFixed(2) === lat.toFixed(2) &&
-          c.coord.lon.toFixed(2) === lon.toFixed(2)
-      );
-      const city_name = city[0].name;
-      if (typeof city_name === "undefined") reject("City not found");
-
-      resolve(city_name);
-    });
-  };
-
-  // console.log("lat:" + lat);
-  // console.log("lon:" + lon);
-  console.log({ state });
+  });
 
   return (
     <div className="App">
