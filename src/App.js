@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { set_city, set_current_data, set_forecast_data } from "./redux/action";
+import { set_current_data, set_forecast_data } from "./redux/action";
 import Temperature from "./Components/Temperature/Temperature";
+import Wind from "./Components/Wind/Wind";
+import Pressure from "./Components/Pressure/Pressure";
+import Visibility from "./Components/Visibility/Visibility";
+import Humidity from "./Components/Humidity/Humidity";
+import Sunrise from "./Components/Sunrise/Sunrise";
+import Sunset from "./Components/Sunset/Sunset";
 
 function App() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
-  // const [data, setData] = useState(0);
-  // const [currentWeatherUrl, setcurrentWeatherUrl] = useState(
-  //   `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
-  // );
-  // const [forecastUrl, setforecastUrl] = useState(
-  //   `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`
-  // );
-  // const [cityNameUrl, setcityNameUrl] = useState(
-  //   `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5&appid=${process.env.REACT_APP_API_KEY}`
-  // );
 
   const dispatch = useDispatch();
 
@@ -72,7 +68,21 @@ function App() {
 
   return (
     <div className="App">
-      <Temperature />
+      <div className="App_wrapper">
+        <Temperature />
+        <div className="App_weather_info">
+          <Wind />
+          <Pressure />
+        </div>
+        <div className="App_weather_info">
+          <Visibility />
+          <Humidity />
+        </div>
+        <div className="App_weather_info">
+          <Sunrise />
+          <Sunset />
+        </div>
+      </div>
     </div>
   );
 }

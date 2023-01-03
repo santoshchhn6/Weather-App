@@ -1,0 +1,50 @@
+.Panel2 {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--primary-color);
+  /* position: relative; */
+}
+
+.Panel2_info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.Panel2_Title {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.Panel2_img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.Panel2_c1 {
+  background: var(--primary-color);
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: 20px;
+  top: 0;
+}
+.Panel2_c2 {
+  background: var(--secondary-color);
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  right: 0px;
+  top: -30px;
+}
+.Panel2_icon {
+  height: 60px;
+  width: 60px;
+  font-size: 100vw;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

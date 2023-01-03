@@ -1,6 +1,20 @@
 .App {
   padding: 10px 0;
   display: flex;
+  justify-content: center;
+}
+
+.App_wrapper {
+  width: 600px;
+  display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
+  /* border: 1px solid red; */
+}
+
+.App_weather_info {
+  width: 100%;
+  display: flex;
+  gap: 20px;
 }
