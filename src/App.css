@@ -8,7 +8,7 @@
   width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--gap);
   align-items: center;
   /* border: 1px solid red; */
 }
@@ -16,5 +16,5 @@
 .App_weather_info {
   width: 100%;
   display: flex;
-  gap: 20px;
+  gap: var(--gap);
 }

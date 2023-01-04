@@ -13,9 +13,10 @@ import Sunset from "./Components/Sunset/Sunset";
 function App() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const [firstTime, setFirstTime] = useState(true);
+  const [interval] = useState(60000);
 
   const dispatch = useDispatch();
-
   const state = useSelector((state) => state);
 
   useEffect(() => {
@@ -24,8 +25,10 @@ function App() {
       setLat(lt);
       setLon(ln);
     });
+  });
 
-    if (lat !== null || lon !== null) {
+  useEffect(() => {
+    const setData = () => {
       console.log("lt:" + lat);
       console.log("ln:" + lon);
 
@@ -54,8 +57,18 @@ function App() {
           dispatch(set_forecast_data(data));
         })
         .catch(console.error);
+    };
+    if (lat !== null || lon !== null) {
+      setData();
+      setFirstTime(false);
+
+      if (!firstTime) {
+        setInterval(() => {
+          setData();
+        }, interval);
+      }
     }
-  }, [lat, lon]);
+  }, [lat, lon, firstTime]);
 
   const getLatLon = new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(function (location) {

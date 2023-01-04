@@ -8,6 +8,7 @@
   --bg-color: rgba(18, 22, 53, 0.384);
   --border-color: rgba(255, 255, 255, 0.089);
   --font-color: rgb(255, 255, 255);
+  --gap: 20px;
 }
 
 body {
@@ -30,6 +31,6 @@ code {
   background: rgba(73, 179, 240, 0.466);
   position: absolute;
   border-radius: 50%;
-  /* filter: blur(50px); */
+  filter: blur(40px);
   z-index: -9;
 }
