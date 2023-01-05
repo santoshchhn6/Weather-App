@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { set_current_data, set_forecast_data } from "./redux/action";
+import {
+  set_current_data,
+  set_hourly_forecast_data,
+  set_weekly_forecast_data,
+} from "./redux/action";
 import Temperature from "./Components/Temperature/Temperature";
 import Wind from "./Components/Wind/Wind";
 import Pressure from "./Components/Pressure/Pressure";
@@ -9,6 +13,7 @@ import Visibility from "./Components/Visibility/Visibility";
 import Humidity from "./Components/Humidity/Humidity";
 import Sunrise from "./Components/Sunrise/Sunrise";
 import Sunset from "./Components/Sunset/Sunset";
+import WeeklyForecast from "./Components/WeeklyForecast/WeeklyForecast";
 
 function App() {
   const [lat, setLat] = useState(null);
@@ -29,8 +34,8 @@ function App() {
 
   useEffect(() => {
     const setData = () => {
-      console.log("lt:" + lat);
-      console.log("ln:" + lon);
+      // console.log("lt:" + lat);
+      // console.log("ln:" + lon);
 
       let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
       let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
@@ -41,8 +46,8 @@ function App() {
           return res.json();
         })
         .then((data) => {
-          console.log("============Current=================");
-          console.log({ data });
+          // console.log("============Current=================");
+          // console.log({ data });
           dispatch(set_current_data(data));
         })
         .catch(console.error);
@@ -52,9 +57,12 @@ function App() {
           return res.json();
         })
         .then((data) => {
-          console.log("============Forecast=================");
-          console.log({ data });
-          dispatch(set_forecast_data(data));
+          // console.log("============Forecast=================");
+          // console.log({ data });
+          dispatch(set_hourly_forecast_data(data));
+          // console.log("============Weekly Forecast=================");
+          const weeklyData = extractWeekyForecastData(data);
+          dispatch(set_weekly_forecast_data(weeklyData));
         })
         .catch(console.error);
     };
@@ -79,6 +87,27 @@ function App() {
     });
   });
 
+  const extractWeekyForecastData = (data) => {
+    let weeklyForecast = [];
+    let date = null;
+    const time = "09:00:00";
+
+    data.list.forEach((e) => {
+      let [current_date, current_time] = e?.dt_txt.split(" ");
+
+      if (date !== current_date && time === current_time) {
+        weeklyForecast.push({
+          date: e?.dt,
+          temp: e?.main.temp,
+          icon: e?.weather[0].icon,
+        });
+        date = current_date;
+      }
+    });
+    return weeklyForecast;
+  };
+
+  // console.log({ state });
   return (
     <div className="App">
       <div className="App_wrapper">
@@ -95,6 +124,7 @@ function App() {
           <Sunrise />
           <Sunset />
         </div>
+        <WeeklyForecast />
       </div>
     </div>
   );

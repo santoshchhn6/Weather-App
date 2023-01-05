@@ -17,7 +17,8 @@ const initialState = {
     },
     city: null,
   },
-  forecast: [],
+  hourly_forecast: [],
+  weekly_forecast: [],
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -41,14 +42,20 @@ const reducer = (state = initialState, { type, payload }) => {
         },
       };
     }
-    case types.SET_FORECAST_DATA: {
+    case types.SET_HOURLY_FORECAST_DATA: {
       return {
         ...state,
-        forecast: payload.list.map((e) => ({
+        hourly_forecast: payload.list.map((e) => ({
           date: e.dt,
           temp: e.main.temp,
           icon: e.weather[0].icon,
         })),
+      };
+    }
+    case types.SET_WEEKLY_FORECAST_DATA: {
+      return {
+        ...state,
+        weekly_forecast:payload
       };
     }
 

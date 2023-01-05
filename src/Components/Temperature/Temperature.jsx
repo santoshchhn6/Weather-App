@@ -18,7 +18,7 @@ import Panel from "../../CustomComponents/Panel/Panel";
 
 const Temperature = () => {
   const current = useSelector((state) => state.current);
-  const forecast = useSelector((state) => state.forecast);
+  const hourly_forecast = useSelector((state) => state.hourly_forecast);
   const dateString = getDateTimeString(current?.date * 1000);
   const [minTemp, setMinTemp] = useState(0);
   const [maxTemp, setMaxTemp] = useState(0);
@@ -28,16 +28,16 @@ const Temperature = () => {
     //only return first 7 element
     //formating date into hr e.g.'9am'
     //find min and max temperature for chart y-axis
-    if (forecast?.length > 0) {
+    if (hourly_forecast?.length > 0) {
       let arr = [];
       let min = 100;
       let max = 0;
       for (let i = 0; i < 7; i++) {
-        let temp = Math.floor(forecast[i].temp);
+        let temp = Math.floor(hourly_forecast[i].temp);
         if (temp < min) min = temp;
         if (temp > max) max = temp;
         arr.push({
-          time: getHrAmPm(forecast[i].date * 1000),
+          time: getHrAmPm(hourly_forecast[i].date * 1000),
           temp,
         });
       }
@@ -49,7 +49,7 @@ const Temperature = () => {
   });
 
   useEffect(() => {
-    if (forecast !== null) {
+    if (hourly_forecast !== null) {
       getFirstSevenForecastList
         .then((result) => {
           const [min, max, forecastList] = result;
@@ -59,7 +59,7 @@ const Temperature = () => {
         })
         .catch((error) => console.log(error));
     }
-  }, [forecast]);
+  }, [hourly_forecast]);
 
   return (
     <Panel className="Temperature">

@@ -7,7 +7,7 @@ const Sunset = () => {
   const sunset = useSelector((state) => state.current?.sunset);
   const timeStr = getTimeString(new Date(sunset * 1000));
   return (
-    <Panel2 title="Sunrise" value={timeStr}>
+    <Panel2 title="Sunset" value={timeStr}>
       <GiSunset />
     </Panel2>
   );
