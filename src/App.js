@@ -7,13 +7,9 @@ import {
   set_weekly_forecast_data,
 } from "./redux/action";
 import Temperature from "./Components/Temperature/Temperature";
-import Wind from "./Components/Wind/Wind";
-import Pressure from "./Components/Pressure/Pressure";
-import Visibility from "./Components/Visibility/Visibility";
-import Humidity from "./Components/Humidity/Humidity";
-import Sunrise from "./Components/Sunrise/Sunrise";
-import Sunset from "./Components/Sunset/Sunset";
+
 import WeeklyForecast from "./Components/WeeklyForecast/WeeklyForecast";
+import WeatherInfo from "./Components/WeatherInfo/WeatherInfo";
 
 function App() {
   const [lat, setLat] = useState(null);
@@ -111,18 +107,9 @@ function App() {
   return (
     <div className="App">
       <div className="App_wrapper">
-        <Temperature />
-        <div className="App_weather_info">
-          <Wind />
-          <Pressure />
-        </div>
-        <div className="App_weather_info">
-          <Visibility />
-          <Humidity />
-        </div>
-        <div className="App_weather_info">
-          <Sunrise />
-          <Sunset />
+        <div>
+          <Temperature />
+          <WeatherInfo />
         </div>
         <WeeklyForecast />
       </div>

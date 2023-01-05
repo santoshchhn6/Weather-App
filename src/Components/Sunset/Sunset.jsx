@@ -1,4 +1,4 @@
-import { GiSunset } from "react-icons/gi";
+import { BsSunset } from "react-icons/bs";
 import Panel2 from "../../CustomComponents/Panel2/Panel2";
 import { useSelector } from "react-redux";
 import { getTimeString } from "../../dateTime";
@@ -8,7 +8,7 @@ const Sunset = () => {
   const timeStr = getTimeString(new Date(sunset * 1000));
   return (
     <Panel2 title="Sunset" value={timeStr}>
-      <GiSunset />
+      <BsSunset />
     </Panel2>
   );
 };

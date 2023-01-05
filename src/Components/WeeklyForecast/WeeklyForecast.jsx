@@ -8,10 +8,10 @@ const WeeklyForecast = () => {
   const forecast = useSelector((state) => state.weekly_forecast);
   return (
     <div className="WeeklyForecast">
-      <Panel3 className="WeeklyForecastTitle">
-        <span>This Week</span>
-      </Panel3>
       <div className="WeeklyForecastDays">
+        <Panel3 className="WeeklyForecastTitle">
+          <span>This Week</span>
+        </Panel3>
         {forecast?.map((e) => (
           <Panel3 key={e?.date} className="WeeklyForecastDay">
             <span>{getDayName(new Date(e?.date * 1000))}</span>

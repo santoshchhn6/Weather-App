@@ -1,0 +1,11 @@
+.WeatherInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.App_weather_info {
+  width: 100%;
+  display: flex;
+  gap: var(--gap);
+}
