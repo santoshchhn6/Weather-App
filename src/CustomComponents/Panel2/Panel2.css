@@ -8,7 +8,7 @@
 .Panel2_info {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
 
 .Panel2_Title {
@@ -17,8 +17,8 @@
 }
 
 .Panel2_img {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -40,8 +40,8 @@
   top: -30px;
 }
 .Panel2_icon {
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   font-size: 100vw;
   padding: 5px;
   display: flex;

@@ -1,0 +1,14 @@
+.Panel3_c1 {
+  background: var(--primary-color);
+  width: 300px;
+  height: 300px;
+  top: 50px;
+  left: 50px;
+}
+.Panel3_c2 {
+  background: var(--secondary-color);
+  width: 150px;
+  height: 150px;
+  top: -20px;
+  right: 20px;
+}
