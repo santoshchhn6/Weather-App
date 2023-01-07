@@ -1,6 +1,8 @@
 import { types } from "./action";
 
-const initialState = {
+export const initialState = {
+  searchTerm: "",
+  coords: { lat: null, lon: null },
   current: {
     temp: null,
     humidity: null,
@@ -21,7 +23,7 @@ const initialState = {
   weekly_forecast: [],
 };
 
-const reducer = (state = initialState, { type, payload }) => {
+const reducer = (state, { type, payload }) => {
   switch (type) {
     case types.SET_CURRENT_DATA: {
       return {
@@ -55,7 +57,19 @@ const reducer = (state = initialState, { type, payload }) => {
     case types.SET_WEEKLY_FORECAST_DATA: {
       return {
         ...state,
-        weekly_forecast:payload
+        weekly_forecast: payload,
+      };
+    }
+    // case types.SET_COORDS: {
+    //   return {
+    //     ...state,
+    //     coords: payload,
+    //   };
+    // }
+    case types.SET_SEARCH_TERM: {
+      return {
+        ...state,
+        searchTerm: payload,
       };
     }
 

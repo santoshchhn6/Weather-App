@@ -1,19 +1,16 @@
 .App {
   padding: 10px 0;
-  display: flex;
-}
-
-.App_wrapper {
   width: 100%;
   display: flex;
+
   flex-wrap: wrap;
   gap: var(--gap);
   justify-content: center;
 }
 
-.App_wrapper > div {
+.App > div {
   width: 600px;
-  height: 745px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   gap: var(--gap);
