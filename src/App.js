@@ -92,8 +92,8 @@ function App() {
         return res.json();
       })
       .then((data) => {
-        console.log("============Current=================");
-        console.log({ data });
+        // console.log("============Current=================");
+        // console.log({ data });
         dispatch(set_current_data(data));
       })
       .catch(console.error);
@@ -116,11 +116,11 @@ function App() {
   const extractWeekyForecastData = (data) => {
     let weeklyForecast = [];
     let date = null;
-    let time = null;
+    let time = data.list[0].dt_txt.split(" ")[1];
 
     data.list.forEach((e) => {
       let [current_date, current_time] = e?.dt_txt.split(" ");
-      time = current_time;
+
       if (date !== current_date && time === current_time) {
         weeklyForecast.push({
           date: e?.dt,

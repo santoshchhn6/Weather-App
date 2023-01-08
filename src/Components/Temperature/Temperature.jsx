@@ -84,7 +84,15 @@ const Temperature = () => {
         </div>
       </div>
       <ResponsiveContainer className="chart" width="100%" aspect={4 / 0.8}>
-        <LineChart data={forecastList}>
+        <LineChart
+          data={forecastList}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
           <YAxis hide type="number" domain={[minTemp - 4, maxTemp + 4]} />
           <XAxis
             axisLine={false}
@@ -92,9 +100,12 @@ const Temperature = () => {
             dataKey="time"
             stroke="var(--font-color)"
           />
-          <Line type="monotone" dataKey="temp" stroke="var(--font-color)">
-            <LabelList dataKey="temp" position="top" />
-          </Line>
+          <Line
+            type="monotone"
+            dataKey="temp"
+            stroke="var(--font-color)"
+            label={{ fill: "var(--font-color)", fontSize: 13, dy: -15 }}
+          />
         </LineChart>
       </ResponsiveContainer>
     </Panel>
