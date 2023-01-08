@@ -2,17 +2,7 @@ import "./Temperature.css";
 import { FaMapMarker } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { getDateTimeString, getHrAmPm } from "../../dateTime";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  LabelList,
-  AreaChart,
-  Area,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
 import Panel from "../../CustomComponents/Panel/Panel";
 
