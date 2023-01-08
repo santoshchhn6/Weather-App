@@ -1,5 +1,6 @@
 # Weather-App-React.js
-This is project is created in React.js
+This is project is created in React.js.
+
 In this project I used 'openweathermap.org' API to get Weather information.
 
 ## Install Dependencies
