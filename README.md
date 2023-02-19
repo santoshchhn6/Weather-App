@@ -1,4 +1,6 @@
 # Weather-App-React.js
+![weather_app](https://user-images.githubusercontent.com/102342620/211186967-2abb8a67-13e6-436d-82dc-ebea8d41f8d3.png)
+
 This project is created in React.js.
 
 In this project I have used 'openweathermap.org' API to get weather information.
@@ -16,8 +18,6 @@ $ npm start
 ## Give location access permission
 
 ![allow_permission](https://user-images.githubusercontent.com/102342620/211186950-6c7ed4e2-406c-4da7-ad07-ea986710debb.png)
-
-![current_loc_weather](https://user-images.githubusercontent.com/102342620/211186967-2abb8a67-13e6-436d-82dc-ebea8d41f8d3.png)
 
 ## Search
 Enter 'City Name', of which we want to check weather.
