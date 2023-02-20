@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import {
-  set_coords_data,
   set_current_data,
   set_hourly_forecast_data,
   set_weekly_forecast_data,
@@ -20,10 +19,18 @@ function App() {
 
   const dispatch = useDispatch();
   const searchTerm = useSelector((state) => state?.searchTerm);
-  const state = useSelector((state) => state);
 
   useEffect(() => {
     console.log("Setting Geo Location...");
+
+    const getLatLon = new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(function (location) {
+        const { latitude, longitude } = location.coords;
+        let lat = latitude.toFixed(2);
+        let lon = longitude.toFixed(2);
+        resolve([lat, lon]);
+      });
+    });
 
     getLatLon.then((loc) => {
       const [lt, ln] = loc;
@@ -62,56 +69,44 @@ function App() {
   useEffect(() => {
     console.log("Fetching Data...");
 
+    const setData = () => {
+      console.log("lt:" + lat);
+      console.log("ln:" + lon);
+
+      let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
+      let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
+
+      fetch(currentWeatherUrl)
+        .then((res) => {
+          if (!res.ok) throw new Error(res.statusText);
+          return res.json();
+        })
+        .then((data) => {
+          // console.log("============Current=================");
+          // console.log({ data });
+          dispatch(set_current_data(data));
+        })
+        .catch(console.error);
+      fetch(forecastUrl)
+        .then((res) => {
+          if (!res.ok) throw new Error(res.statusText);
+          return res.json();
+        })
+        .then((data) => {
+          // console.log("============Forecast=================");
+          // console.log({ data });
+          dispatch(set_hourly_forecast_data(data));
+          // console.log("============Weekly Forecast=================");
+          const weeklyData = extractWeekyForecastData(data);
+          dispatch(set_weekly_forecast_data(weeklyData));
+        })
+        .catch(console.error);
+    };
+
     if (lat !== null || lon !== null) {
       setData();
-      // setInterval(() => {
-      //   setData();
-      // }, interval);
     }
-  }, [lat, lon, searchTerm]);
-
-  const getLatLon = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(function (location) {
-      const { latitude, longitude } = location.coords;
-      let lat = latitude.toFixed(2);
-      let lon = longitude.toFixed(2);
-      resolve([lat, lon]);
-    });
-  });
-
-  const setData = () => {
-    console.log("lt:" + lat);
-    console.log("ln:" + lon);
-
-    let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
-    let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_API_KEY}`;
-
-    fetch(currentWeatherUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => {
-        // console.log("============Current=================");
-        // console.log({ data });
-        dispatch(set_current_data(data));
-      })
-      .catch(console.error);
-    fetch(forecastUrl)
-      .then((res) => {
-        if (!res.ok) throw new Error(res.statusText);
-        return res.json();
-      })
-      .then((data) => {
-        // console.log("============Forecast=================");
-        // console.log({ data });
-        dispatch(set_hourly_forecast_data(data));
-        // console.log("============Weekly Forecast=================");
-        const weeklyData = extractWeekyForecastData(data);
-        dispatch(set_weekly_forecast_data(weeklyData));
-      })
-      .catch(console.error);
-  };
+  }, [lat, lon, searchTerm, dispatch]);
 
   const extractWeekyForecastData = (data) => {
     let weeklyForecast = [];

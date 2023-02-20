@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const Humidity = () => {
   const humidity = useSelector((state) => state.current?.humidity);
   return (
-    <Panel2 title="Humidity" value={humidity}>
+    <Panel2 title="Humidity" value={`${humidity}%`}>
       <MdOutlineWaterDrop />
     </Panel2>
   );
